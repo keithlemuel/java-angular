@@ -1,0 +1,68 @@
+<mat-sidenav-container class="sidenav-container" *ngIf="authService.isLoggedIn()" #sidenavContainer>
+  <mat-sidenav #drawer class="sidenav" mode="side" opened>
+    <div class="logo-container">
+      <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="45" fill="#e0f7fa"/>
+        <path d="M35 40 Q50 20 65 40 L65 65 Q50 80 35 65 Z" fill="#00838f"/>
+        <circle cx="45" cy="45" r="5" fill="#00838f"/>
+        <circle cx="55" cy="45" r="5" fill="#00838f"/>
+      </svg>
+      <h2>VetCare Pro</h2>
+    </div>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/dashboard">
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+      </a>
+      <a mat-list-item routerLink="/appointments">
+        <mat-icon>event</mat-icon>
+        <span>Appointments</span>
+      </a>
+      <a mat-list-item routerLink="/owners" *ngIf="isVet">
+        <mat-icon>people</mat-icon>
+        <span>Pet Owners</span>
+      </a>
+      <a mat-list-item routerLink="/pets">
+        <mat-icon>pets</mat-icon>
+        <span>Pets</span>
+      </a>
+      <a mat-list-item routerLink="/services" *ngIf="isVet">
+        <mat-icon>medical_services</mat-icon>
+        <span>Services</span>
+      </a>
+      <a mat-list-item routerLink="/vaccinations" *ngIf="isVet">
+        <mat-icon>vaccines</mat-icon>
+        <span>Vaccinations</span>
+      </a>
+    </mat-nav-list>
+    <div class="nav-footer">
+      <button mat-button (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" #appToolbar>
+      <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>{{title}}</span>
+      <span class="toolbar-spacer"></span>
+      <button mat-icon-button [matMenuTriggerFor]="userMenu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #userMenu="matMenu">
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<div *ngIf="!authService.isLoggedIn()">
+  <router-outlet></router-outlet>
+</div>

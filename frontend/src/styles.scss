@@ -1,0 +1,239 @@
+/* You can add global styles to this file, and also import other style files */
+
+@use '@angular/material' as mat;
+
+// Include the common styles for Angular Material
+@include mat.core();
+
+// Global styles
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
+  color: #2c3e50;
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6, button, input {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+// Search box styling
+.mat-mdc-form-field {
+  width: 100%;
+  
+  .mat-mdc-text-field-wrapper {
+    background-color: white !important;
+    border-radius: 12px !important;
+    padding: 0 16px !important;
+  }
+
+  .mat-mdc-form-field-flex {
+    height: 48px !important;
+  }
+
+  input.mat-mdc-input-element {
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 0.95rem;
+  }
+}
+
+// Button styling
+.mat-mdc-raised-button, .mat-mdc-button {
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 0.95rem !important;
+  border-radius: 25px !important;
+  padding: 0 24px !important;
+  height: 42px !important;
+  text-transform: none !important;
+}
+
+// Sidenav & Toolbar styles
+.mat-toolbar.mat-primary {
+  background: white !important;
+  color: #00838f !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.sidenav {
+  .logo-container {
+    background: linear-gradient(135deg, #e0f7fa, #b2ebf2) !important;
+    h2 {
+      color: #00838f !important;
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif !important;
+    }
+  }
+
+  mat-nav-list {
+    a {
+      font-family: 'Poppins', sans-serif !important;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: #00838f !important;
+      
+      mat-icon {
+        color: #00acc1 !important;
+      }
+
+      span {
+        color: #00838f !important;
+      }
+
+      &:hover {
+        background-color: #e0f7fa !important;
+      }
+
+      &.active {
+        background-color: #00acc1 !important;
+        
+        span, mat-icon {
+          color: white !important;
+        }
+      }
+    }
+  }
+}
+
+// Page header styling
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    color: #00838f;
+  }
+}
+
+// Quick Actions styling
+.quick-action-card {
+  background: #37474f !important;
+  color: white !important;
+
+  mat-card-title {
+    color: white !important;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin-bottom: 1rem !important;
+  }
+
+  button {
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+}
+
+// Stats cards
+.stat-card {
+  .stat-icon {
+    background: #e0f7fa !important;
+    
+    mat-icon {
+      color: #00acc1 !important;
+    }
+  }
+
+  .stat-info {
+    h3 {
+      color: #37474f !important;
+      font-weight: 500;
+    }
+
+    .stat-number {
+      color: #00acc1 !important;
+      font-weight: 600;
+    }
+  }
+}
+
+// Enhanced card styling
+.mat-mdc-card {
+  border-radius: 16px !important;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12) !important;
+  }
+}
+
+// Container styling
+.page-container {
+  padding: 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00acc1;
+  border-radius: 4px;
+}
+
+.success-snackbar {
+  background: #4caf50;
+  color: white;
+
+  .mat-simple-snackbar-action {
+    color: white;
+  }
+}
+  
+.error-snackbar {
+  background: #f44336;
+  color: white;
+  
+  .mat-simple-snackbar-action {
+    color: white;
+  }
+}
+
+.success-snackbar {
+  --mdc-snackbar-container-color: #4caf50 !important;
+  --mdc-snackbar-supporting-text-color: white !important;
+  --mat-mdc-snack-bar-button-color: white !important;
+}
+
+.error-snackbar {
+  --mdc-snackbar-container-color: #f44336 !important;
+  --mdc-snackbar-supporting-text-color: white !important;
+  --mat-mdc-snack-bar-button-color: white !important;
+}
+
+.appointment-dialog {
+  .mat-mdc-dialog-container {
+    .mdc-dialog__surface {
+      background-color: white;
+    }
+  }
+}
+
+.mat-mdc-dialog-container {
+  --mdc-dialog-container-color: white;
+}
