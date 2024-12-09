@@ -96,20 +96,10 @@ export class AppointmentService {
   }
 
   cancelAppointment(id: number): Observable<Appointment> {
-    // First get the current appointment to preserve its data
-    return this.http.get<Appointment>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() })
-      .pipe(
-        switchMap(appointment => {
-          const payload = {
-            id: id,
-            pet: { id: appointment.pet.id },
-            service: { id: appointment.service.id },
-            dateTime: appointment.dateTime,
-            status: 'CANCELLED'
-          };
-          
-          return this.http.put<Appointment>(`${this.apiUrl}/${id}`, payload, { headers: this.getHeaders() });
-        })
-      );
+    const payload = {
+      id: id,
+      status: 'CANCELLED'
+    };
+    return this.http.put<Appointment>(`${this.apiUrl}/${id}/cancel`, payload, { headers: this.getHeaders() });
   }
 }

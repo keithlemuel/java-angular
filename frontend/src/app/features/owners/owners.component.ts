@@ -18,8 +18,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatCardModule,
     MatIconModule,
     MatButtonModule,
-    MatDialogModule,
-    OwnerDialogComponent
+    MatDialogModule
   ],
   template: `
     <div class="page-container">

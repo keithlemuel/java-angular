@@ -139,4 +139,23 @@ public class AppointmentController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @PutMapping("/{id}/cancel")
+    public ResponseEntity<AppointmentDTO> cancelAppointment(
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetailsImpl currentUser) {
+        try {
+            User user = userRepository.findById(currentUser.getId())
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+            
+            Appointment appointment = new Appointment();
+            appointment.setId(id);
+            appointment.setStatus(AppointmentStatus.CANCELLED);
+            
+            Appointment cancelled = appointmentService.updateAppointment(appointment, user);
+            return ResponseEntity.ok(convertToDTO(cancelled));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 } 

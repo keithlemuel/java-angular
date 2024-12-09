@@ -28,8 +28,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatTableModule,
     MatDialogModule,
     MatDatepickerModule,
-    MatNativeDateModule,
-    AppointmentDialogComponent
+    MatNativeDateModule
   ],
   template: `
     <div class="appointments-container">
