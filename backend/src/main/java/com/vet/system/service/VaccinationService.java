@@ -1,6 +1,7 @@
 package com.vet.system.service;
 
 import com.vet.system.model.Vaccination;
+import com.vet.system.model.VaccinationStatus;
 import com.vet.system.repository.VaccinationRepository;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -32,6 +33,15 @@ public class VaccinationService {
     }
 
     public Vaccination addVaccination(Vaccination vaccination) {
+        // Calculate status based on dates
+        LocalDate now = LocalDate.now();
+        if (vaccination.getDateAdministered() != null) {
+            vaccination.setStatus(VaccinationStatus.COMPLETED);
+        } else if (vaccination.getNextDueDate().isBefore(now)) {
+            vaccination.setStatus(VaccinationStatus.OVERDUE);
+        } else {
+            vaccination.setStatus(VaccinationStatus.UPCOMING);
+        }
         return vaccinationRepository.save(vaccination);
     }
 

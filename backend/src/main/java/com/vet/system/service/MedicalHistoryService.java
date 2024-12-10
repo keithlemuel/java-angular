@@ -5,6 +5,7 @@ import com.vet.system.repository.MedicalHistoryRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDate;
 
 @Service
 public class MedicalHistoryService {
@@ -27,6 +28,10 @@ public class MedicalHistoryService {
     }
 
     public MedicalHistory addMedicalHistory(MedicalHistory medicalHistory) {
+        if (medicalHistory.getDate() == null) {
+            medicalHistory.setDate(LocalDate.now());
+        }
+        
         return medicalHistoryRepository.save(medicalHistory);
     }
 
@@ -44,5 +49,9 @@ public class MedicalHistoryService {
 
     public void deleteMedicalHistory(Long id) {
         medicalHistoryRepository.deleteById(id);
+    }
+
+    public List<MedicalHistory> getMedicalHistoriesByAppointmentId(Long appointmentId) {
+        return medicalHistoryRepository.findByAppointmentId(appointmentId);
     }
 } 

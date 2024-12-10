@@ -3,7 +3,13 @@ package com.vet.system.controller;
 import com.vet.system.model.Appointment;
 import com.vet.system.model.AppointmentStatus;
 import com.vet.system.service.AppointmentService;
+import com.vet.system.model.MedicalHistory;
+import com.vet.system.model.Role.RoleType;
+import com.vet.system.service.MedicalHistoryService;
+
+import org.springframework.context.support.BeanDefinitionDsl.Role;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,12 +28,19 @@ import com.vet.system.dto.AppointmentDTO;
 @RequestMapping("/api/appointments")
 public class AppointmentController {
     private final AppointmentService appointmentService;
+    private final MedicalHistoryService medicalHistoryService;
     private final UserRepository userRepository;
     private final PetRepository petRepository;
     private final VetServiceRepository serviceRepository;
 
-    public AppointmentController(AppointmentService appointmentService, UserRepository userRepository, PetRepository petRepository, VetServiceRepository serviceRepository) {
+    public AppointmentController(
+            AppointmentService appointmentService,
+            MedicalHistoryService medicalHistoryService,
+            UserRepository userRepository,
+            PetRepository petRepository,
+            VetServiceRepository serviceRepository) {
         this.appointmentService = appointmentService;
+        this.medicalHistoryService = medicalHistoryService;
         this.userRepository = userRepository;
         this.petRepository = petRepository;
         this.serviceRepository = serviceRepository;
@@ -157,5 +170,22 @@ public class AppointmentController {
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @PostMapping("/{appointmentId}/medical-histories")
+    public ResponseEntity<MedicalHistory> addMedicalHistoryToAppointment(
+            @PathVariable Long appointmentId,
+            @RequestBody MedicalHistory medicalHistory,
+            @AuthenticationPrincipal UserDetailsImpl currentUser) {
+        
+        User user = userRepository.findById(currentUser.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+                
+        if (user.getRoles().stream()
+                .noneMatch(role -> role.getName() == RoleType.ROLE_VET)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        return ResponseEntity.ok(appointmentService.addMedicalHistoryToAppointment(appointmentId, medicalHistory));
     }
 } 

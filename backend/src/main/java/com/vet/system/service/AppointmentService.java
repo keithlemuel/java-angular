@@ -1,20 +1,27 @@
 package com.vet.system.service;
 
 import com.vet.system.model.Appointment;
+import com.vet.system.model.MedicalHistory;
 import com.vet.system.model.User;
 import com.vet.system.model.Role;
 import com.vet.system.repository.AppointmentRepository;
+import com.vet.system.repository.MedicalHistoryRepository;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 @Service
 public class AppointmentService {
     private final AppointmentRepository appointmentRepository;
+    private final MedicalHistoryRepository medicalHistoryRepository;
 
-    public AppointmentService(AppointmentRepository appointmentRepository) {
+    public AppointmentService(
+            AppointmentRepository appointmentRepository,
+            MedicalHistoryRepository medicalHistoryRepository) {
         this.appointmentRepository = appointmentRepository;
+        this.medicalHistoryRepository = medicalHistoryRepository;
     }
 
     public List<Appointment> getAllAppointments(User currentUser) {
@@ -85,5 +92,31 @@ public class AppointmentService {
         }
         
         return appointmentRepository.save(appointment);
+    }
+
+    public MedicalHistory addMedicalHistoryToAppointment(Long appointmentId, MedicalHistory medicalHistory) {
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new RuntimeException("Appointment not found with id: " + appointmentId));
+
+        // Set the appointment and pet references
+        medicalHistory.setAppointment(appointment);
+        medicalHistory.setPet(appointment.getPet());
+
+        // If date is not set, use appointment date
+        if (medicalHistory.getDate() == null) {
+            medicalHistory.setDate(appointment.getDateTime().toLocalDate());
+        }
+
+        // Save the medical history
+        MedicalHistory savedHistory = medicalHistoryRepository.save(medicalHistory);
+
+        // Update the appointment's medical histories list
+        if (appointment.getMedicalHistories() == null) {
+            appointment.setMedicalHistories(new ArrayList<>());
+        }
+        appointment.getMedicalHistories().add(savedHistory);
+        appointmentRepository.save(appointment);
+
+        return savedHistory;
     }
 } 

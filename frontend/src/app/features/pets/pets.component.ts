@@ -5,13 +5,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { PetService } from '../../services/pet.service';
 import { PetDialogComponent } from './pet-dialog/pet-dialog.component';
 import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { MatChipsModule } from '@angular/material/chips';
+import { RouterModule } from '@angular/router';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-pets',
@@ -23,7 +26,11 @@ import { MatChipsModule } from '@angular/material/chips';
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
-    MatChipsModule
+    MatChipsModule,
+    RouterModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   template: `
     <div class="page-container">
@@ -54,6 +61,9 @@ import { MatChipsModule } from '@angular/material/chips';
             <p *ngIf="isVet"><strong>Owner:</strong> {{pet.owner?.firstName}} {{pet.owner?.lastName}}</p>
           </div>
           <div class="pet-actions">
+            <button mat-icon-button color="primary" [routerLink]="['/pets', pet.id, 'medical-history']">
+              <mat-icon>medical_services</mat-icon>
+            </button>
             <button mat-icon-button color="accent" (click)="openPetDialog(pet)">
               <mat-icon>edit</mat-icon>
             </button>

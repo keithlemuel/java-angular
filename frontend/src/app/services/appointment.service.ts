@@ -102,4 +102,19 @@ export class AppointmentService {
     };
     return this.http.put<Appointment>(`${this.apiUrl}/${id}/cancel`, payload, { headers: this.getHeaders() });
   }
+
+  addMedicalHistoryToAppointment(appointmentId: number, medicalHistory: any): Observable<any> {
+    return this.http.post<any>(
+      `${this.apiUrl}/${appointmentId}/medical-histories`, 
+      medicalHistory, 
+      { headers: this.getHeaders() }
+    );
+  }
+
+  getMedicalHistories(appointmentId: number): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${this.apiUrl}/${appointmentId}/medical-histories`,
+      { headers: this.getHeaders() }
+    );
+  }
 }

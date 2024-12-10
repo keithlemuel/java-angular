@@ -20,6 +20,9 @@ public class Vaccination {
     private LocalDate dateAdministered;
     private LocalDate nextDueDate;
     
+    @Enumerated(EnumType.STRING)
+    private VaccinationStatus status;
+    
     @ManyToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;

@@ -4,6 +4,7 @@ import { LoginComponent } from './features/auth/login/login.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { AuthGuard } from './guards/auth.guard';
 import { RegisterComponent } from './features/auth/register/register.component';
+import { PetMedicalHistoryComponent } from './components/pet-medical-history/pet-medical-history.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -46,8 +47,14 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     data: { role: 'ROLE_VET' }
   },
+  {
+    path: 'pets/:id/medical-history',
+    component: PetMedicalHistoryComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ROLE_VET', 'ROLE_OWNER'] }
+  },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: '**', redirectTo: '/login' }
+  { path: '**', redirectTo: '/dashboard' }
 ];
 
 @NgModule({
