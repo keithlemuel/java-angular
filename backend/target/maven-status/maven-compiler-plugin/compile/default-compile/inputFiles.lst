@@ -22,6 +22,7 @@
 /Users/keith/Documents/Small Projects/java-angular/backend/src/main/java/com/vet/system/model/Role.java
 /Users/keith/Documents/Small Projects/java-angular/backend/src/main/java/com/vet/system/model/User.java
 /Users/keith/Documents/Small Projects/java-angular/backend/src/main/java/com/vet/system/model/Vaccination.java
+/Users/keith/Documents/Small Projects/java-angular/backend/src/main/java/com/vet/system/model/VaccinationStatus.java
 /Users/keith/Documents/Small Projects/java-angular/backend/src/main/java/com/vet/system/model/VetService.java
 /Users/keith/Documents/Small Projects/java-angular/backend/src/main/java/com/vet/system/repository/AppointmentRepository.java
 /Users/keith/Documents/Small Projects/java-angular/backend/src/main/java/com/vet/system/repository/MedicalHistoryRepository.java
